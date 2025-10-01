@@ -486,8 +486,52 @@
     </div>
 
     <!-- Main Content -->
-    <div class="container">
+<div class="container">
+
+    <!-- Stays Section -->
+    <div id="staysSection" class="main-section">
         <h2 class="section-title">Recommended hotels in New York</h2>
+        <div class="hotel-listings" id="hotelListings"></div>
+    </div>
+
+    <!-- Flights Section -->
+    <div id="flightsSection" class="main-section" style="display:none;">
+        <h2 class="section-title">Search Flights</h2>
+        <form id="flightForm" class="search-form">
+            <input type="text" id="from" placeholder="From">
+            <input type="text" id="to" placeholder="To">
+            <input type="date" id="departure">
+            <input type="date" id="return">
+            <button type="submit" class="search-btn">Search Flights</button>
+        </form>
+        <div id="flightResults"></div>
+    </div>
+
+    <!-- Cars Section -->
+    <div id="carsSection" class="main-section" style="display:none;">
+        <h2 class="section-title">Search Cars</h2>
+        <form id="carsForm" class="search-form">
+            <input type="text" id="carLocation" placeholder="Pick-up Location">
+            <input type="date" id="carDate">
+            <button type="submit" class="search-btn">Search Cars</button>
+        </form>
+        <div id="carsResults"></div>
+    </div>
+
+    <!-- Packages Section -->
+    <div id="packagesSection" class="main-section" style="display:none;">
+        <h2 class="section-title">Packages</h2>
+        <div id="packagesResults">Packages content here...</div>
+    </div>
+
+    <!-- Things to do Section -->
+    <div id="thingsSection" class="main-section" style="display:none;">
+        <h2 class="section-title">Things to do</h2>
+        <div id="thingsResults">Activities content here...</div>
+    </div>
+
+</div>
+
         
         <!-- Hotel Listings -->
         <div class="hotel-listings" id="hotelListings">
@@ -616,243 +660,269 @@
             </div>
         </div>
     </div>
-
-    <script>
-        // Sample hotel data
-        const hotels = [
-            {
-                name: "The Plaza Hotel",
-                location: "New York, Fifth Avenue",
-                price: 299,
-                image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
-                features: ["Free WiFi", "Swimming Pool", "Spa"]
-            },
-            {
-                name: "Park Central Hotel",
-                location: "New York, Manhattan",
-                price: 189,
-                image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
-                features: ["Free WiFi", "Restaurant", "Fitness Center"]
-            },
-            {
-                name: "The Ritz-Carlton",
-                location: "New York, Battery Park",
-                price: 349,
-                image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
-                features: ["Sea View", "Free WiFi", "Pool"]
-            },
-            {
-                name: "The Manhattan Hotel",
-                location: "New York, Times Square",
-                price: 229,
-                image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
-                features: ["Free WiFi", "Bar", "Air Conditioning"]
-            },
-            {
-                name: "Grand Hyatt",
-                location: "New York, Midtown",
-                price: 279,
-                image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
-                features: ["Free WiFi", "Spa", "Restaurant"]
-            },
-            {
-                name: "Hilton Times Square",
-                location: "New York, Theater District",
-                price: 209,
-                image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
-                features: ["Free WiFi", "Fitness Center", "Bar"]
-            }
-        ];
-
-        // Auth state management
-        let currentUser = null;
-
-        // Function to generate hotel cards
-        function generateHotelCards() {
-            const hotelListings = document.getElementById('hotelListings');
-            hotelListings.innerHTML = '';
-            
-            hotels.forEach(hotel => {
-                const card = document.createElement('div');
-                card.className = 'hotel-card';
-                
-                card.innerHTML = `
-                    <div class="hotel-image">
-                        <img src="${hotel.image}" alt="${hotel.name}">
-                    </div>
-                    <div class="hotel-details">
-                        <h3 class="hotel-name">${hotel.name}</h3>
-                        <p class="hotel-location">${hotel.location}</p>
-                        <div class="hotel-features">
-                            ${hotel.features.map(feature => `<span class="feature">${feature}</span>`).join('')}
-                        </div>
-                        <div class="hotel-price">
-                            <div class="price">$${hotel.price}<span> per night</span></div>
-                            <button class="select-hotel">Select</button>
-                        </div>
-                    </div>
-                `;
-                
-                hotelListings.appendChild(card);
-            });
+<script>
+    // ---------------- Sample hotel data ----------------
+    const hotels = [
+        {
+            name: "The Plaza Hotel",
+            location: "New York, Fifth Avenue",
+            price: 299,
+            image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
+            features: ["Free WiFi", "Swimming Pool", "Spa"]
+        },
+        {
+            name: "Park Central Hotel",
+            location: "New York, Manhattan",
+            price: 189,
+            image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
+            features: ["Free WiFi", "Restaurant", "Fitness Center"]
+        },
+        {
+            name: "The Ritz-Carlton",
+            location: "New York, Battery Park",
+            price: 349,
+            image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
+            features: ["Sea View", "Free WiFi", "Pool"]
+        },
+        {
+            name: "The Manhattan Hotel",
+            location: "New York, Times Square",
+            price: 229,
+            image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
+            features: ["Free WiFi", "Bar", "Air Conditioning"]
+        },
+        {
+            name: "Grand Hyatt",
+            location: "New York, Midtown",
+            price: 279,
+            image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
+            features: ["Free WiFi", "Spa", "Restaurant"]
+        },
+        {
+            name: "Hilton Times Square",
+            location: "New York, Theater District",
+            price: 209,
+            image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
+            features: ["Free WiFi", "Fitness Center", "Bar"]
         }
+    ];
 
-        // Modal functionality
-        function setupModals() {
-            const signUpModal = document.getElementById('signUpModal');
-            const signInModal = document.getElementById('signInModal');
-            const signInLink = document.getElementById('signInLink');
-            const switchToSignUp = document.getElementById('switchToSignUp');
-            const switchToSignIn = document.getElementById('switchToSignIn');
-            const closeButtons = document.querySelectorAll('.close-btn');
-            const logoutBtn = document.getElementById('logoutBtn');
-            const welcomeMsg = document.getElementById('welcomeMsg');
+    // ---------------- Auth state ----------------
+    let currentUser = null;
 
-            // Open sign in modal
-            signInLink.addEventListener('click', function(e) {
+    // ---------------- Generate hotel cards ----------------
+    function generateHotelCards() {
+        const hotelListings = document.getElementById('hotelListings');
+        hotelListings.innerHTML = '';
+
+        hotels.forEach(hotel => {
+            const card = document.createElement('div');
+            card.className = 'hotel-card';
+
+            card.innerHTML = `
+                <div class="hotel-image">
+                    <img src="${hotel.image}" alt="${hotel.name}">
+                </div>
+                <div class="hotel-details">
+                    <h3 class="hotel-name">${hotel.name}</h3>
+                    <p class="hotel-location">${hotel.location}</p>
+                    <div class="hotel-features">
+                        ${hotel.features.map(f => `<span class="feature">${f}</span>`).join('')}
+                    </div>
+                    <div class="hotel-price">
+                        <div class="price">$${hotel.price}<span> per night</span></div>
+                        <button class="select-hotel">Select</button>
+                    </div>
+                </div>
+            `;
+
+            hotelListings.appendChild(card);
+        });
+    }
+
+    // ---------------- Section switcher ----------------
+    const sections = {
+        "Stays": "staysSection",
+        "Flights": "flightsSection",
+        "Cars": "carsSection",
+        "Packages": "packagesSection",
+        "Things to do": "thingsSection"
+    };
+
+    function setupSectionSwitcher() {
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
                 e.preventDefault();
-                signInModal.style.display = 'flex';
-            });
+                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
 
-            // Switch to sign up
-            switchToSignUp.addEventListener('click', function() {
-                signInModal.style.display = 'none';
-                signUpModal.style.display = 'flex';
-            });
+                document.querySelectorAll('.main-section').forEach(sec => sec.style.display = 'none');
 
-            // Switch to sign in
-            switchToSignIn.addEventListener('click', function() {
-                signUpModal.style.display = 'none';
-                signInModal.style.display = 'flex';
-            });
-
-            // Close modals
-            closeButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    signUpModal.style.display = 'none';
-                    signInModal.style.display = 'none';
-                });
-            });
-
-            // Close modal when clicking outside
-            window.addEventListener('click', function(e) {
-                if (e.target === signUpModal) {
-                    signUpModal.style.display = 'none';
-                }
-                if (e.target === signInModal) {
-                    signInModal.style.display = 'none';
-                }
-            });
-
-            // Sign up form submission
-            document.getElementById('signUpForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const fullName = document.getElementById('fullName').value;
-                const email = document.getElementById('signUpEmail').value;
-                const password = document.getElementById('signUpPassword').value;
-                
-                // Simple validation
-                if (fullName && email && password) {
-                    // Store user data (in a real app, this would be sent to a server)
-                    const user = { fullName, email, password };
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    currentUser = user;
-                    
-                    // Update UI
-                    updateUserStatus();
-                    
-                    // Close modal
-                    signUpModal.style.display = 'none';
-                    
-                    // Show success message
-                    alert('Registration successful! You are now signed in.');
-                } else {
-                    alert('Please fill in all fields.');
-                }
-            });
-
-            // Sign in form submission
-            document.getElementById('signInForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const email = document.getElementById('signInEmail').value;
-                const password = document.getElementById('signInPassword').value;
-                
-                // Check if user exists (in a real app, this would verify with server)
-                const storedUser = JSON.parse(localStorage.getItem('currentUser'));
-                
-                if (storedUser && storedUser.email === email && storedUser.password === password) {
-                    currentUser = storedUser;
-                    
-                    // Update UI
-                    updateUserStatus();
-                    
-                    // Close modal
-                    signInModal.style.display = 'none';
-                    
-                    // Show success message
-                    alert('Sign in successful!');
-                } else {
-                    alert('Invalid email or password.');
-                }
-            });
-
-            // Logout functionality
-            logoutBtn.addEventListener('click', function() {
-                currentUser = null;
-                localStorage.removeItem('currentUser');
-                updateUserStatus();
-                alert('You have been signed out.');
-            });
-
-            // Update user status in UI
-            function updateUserStatus() {
-                if (currentUser) {
-                    welcomeMsg.textContent = `Welcome, ${currentUser.fullName.split(' ')[0]}!`;
-                    signInLink.style.display = 'none';
-                    logoutBtn.style.display = 'block';
-                } else {
-                    welcomeMsg.textContent = '';
-                    signInLink.style.display = 'inline';
-                    logoutBtn.style.display = 'none';
-                }
-            }
-
-            // Check if user is already logged in
-            const storedUser = localStorage.getItem('currentUser');
-            if (storedUser) {
-                currentUser = JSON.parse(storedUser);
-                updateUserStatus();
-            }
-        }
-
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', function() {
-            generateHotelCards();
-            setupModals();
-            
-            // Add event listener to the search form
-            document.getElementById('searchForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const destination = document.getElementById('destination').value;
-                document.querySelector('.section-title').textContent = `Recommended hotels in ${destination}`;
-                // In a real application, you would fetch new hotel data based on the search criteria
-            });
-            
-            // Add event listeners to "Select" buttons
-            document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('select-hotel')) {
-                    if (!currentUser) {
-                        alert('Please sign in to book a hotel.');
-                        document.getElementById('signInModal').style.display = 'flex';
-                        return;
-                    }
-                    
-                    const hotelCard = e.target.closest('.hotel-card');
-                    const hotelName = hotelCard.querySelector('.hotel-name').textContent;
-                    alert(`You selected ${hotelName}! In a real application, you would be redirected to a booking page.`);
-                }
+                const sectionId = sections[this.textContent];
+                document.getElementById(sectionId).style.display = 'block';
             });
         });
-    </script>
+    }
+
+    // ---------------- Flights sample data ----------------
+    const flights = [
+        { from: "New York", to: "London", price: 599, airline: "Delta" },
+        { from: "New York", to: "Paris", price: 649, airline: "Air France" },
+        { from: "London", to: "New York", price: 590, airline: "British Airways" }
+    ];
+
+    function setupFlightSearch() {
+        document.getElementById('flightForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const from = document.getElementById('from').value.trim();
+            const to = document.getElementById('to').value.trim();
+            const resultsDiv = document.getElementById('flightResults');
+            resultsDiv.innerHTML = '';
+
+            const filtered = flights.filter(f => 
+                f.from.toLowerCase() === from.toLowerCase() &&
+                f.to.toLowerCase() === to.toLowerCase()
+            );
+
+            if(filtered.length === 0) {
+                resultsDiv.innerHTML = '<p>No flights found.</p>';
+                return;
+            }
+
+            filtered.forEach(f => {
+                const card = document.createElement('div');
+                card.className = 'hotel-card'; // reuse hotel-card styling
+                card.innerHTML = `
+                    <h3>${f.airline}</h3>
+                    <p>${f.from} → ${f.to}</p>
+                    <p>Price: $${f.price}</p>
+                `;
+                resultsDiv.appendChild(card);
+            });
+        });
+    }
+
+    // ---------------- Auth & Modal ----------------
+    function setupAuth() {
+        const signUpModal = document.getElementById('signUpModal');
+        const signInModal = document.getElementById('signInModal');
+        const signInLink = document.getElementById('signInLink');
+        const switchToSignUp = document.getElementById('switchToSignUp');
+        const switchToSignIn = document.getElementById('switchToSignIn');
+        const closeButtons = document.querySelectorAll('.close-btn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const welcomeMsg = document.getElementById('welcomeMsg');
+
+        // Open sign in
+        signInLink.addEventListener('click', function(e){
+            e.preventDefault();
+            signInModal.style.display = 'flex';
+        });
+
+        // Switch modals
+        switchToSignUp.addEventListener('click', function(){
+            signInModal.style.display = 'none';
+            signUpModal.style.display = 'flex';
+        });
+        switchToSignIn.addEventListener('click', function(){
+            signUpModal.style.display = 'none';
+            signInModal.style.display = 'flex';
+        });
+
+        // Close modals
+        closeButtons.forEach(btn => btn.addEventListener('click', () => {
+            signUpModal.style.display = 'none';
+            signInModal.style.display = 'none';
+        }));
+        window.addEventListener('click', function(e){
+            if(e.target === signUpModal) signUpModal.style.display = 'none';
+            if(e.target === signInModal) signInModal.style.display = 'none';
+        });
+
+        // Sign up
+        document.getElementById('signUpForm').addEventListener('submit', function(e){
+            e.preventDefault();
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('signUpEmail').value;
+            const password = document.getElementById('signUpPassword').value;
+
+            if(fullName && email && password){
+                const user = { fullName, email, password };
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                currentUser = user;
+                updateUserStatus();
+                signUpModal.style.display = 'none';
+                alert('Registration successful!');
+            } else {
+                alert('Fill all fields.');
+            }
+        });
+
+        // Sign in
+        document.getElementById('signInForm').addEventListener('submit', function(e){
+            e.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+            const storedUser = JSON.parse(localStorage.getItem('currentUser'));
+
+            if(storedUser && storedUser.email === email && storedUser.password === password){
+                currentUser = storedUser;
+                updateUserStatus();
+                signInModal.style.display = 'none';
+                alert('Sign in successful!');
+            } else alert('Invalid email or password.');
+        });
+
+        // Logout
+        logoutBtn.addEventListener('click', function(){
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateUserStatus();
+        });
+
+        // Update welcome message
+        function updateUserStatus(){
+            if(currentUser){
+                welcomeMsg.textContent = `Welcome, ${currentUser.fullName}`;
+                logoutBtn.style.display = 'inline-block';
+                signInLink.style.display = 'none';
+            } else {
+                welcomeMsg.textContent = '';
+                logoutBtn.style.display = 'none';
+                signInLink.style.display = 'inline-block';
+            }
+        }
+
+        // Initialize
+        const savedUser = JSON.parse(localStorage.getItem('currentUser'));
+        if(savedUser) currentUser = savedUser;
+        updateUserStatus();
+    }
+
+    // ---------------- Select hotel button ----------------
+    function setupSelectButtons() {
+        document.addEventListener('click', function(e){
+            if(e.target.classList.contains('select-hotel')){
+                if(!currentUser){
+                    alert('Please sign in to select a hotel.');
+                    return;
+                }
+                const hotelName = e.target.closest('.hotel-card').querySelector('.hotel-name').textContent;
+                alert(`You selected ${hotelName}. Enjoy your stay!`);
+            }
+        });
+    }
+
+    // ---------------- Initialize ----------------
+    window.addEventListener('DOMContentLoaded', function(){
+        generateHotelCards();
+        setupSectionSwitcher();
+        setupFlightSearch();
+        setupAuth();
+        setupSelectButtons();
+    });
+</script>
+
+   
 </body>
 </html>
